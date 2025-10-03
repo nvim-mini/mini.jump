@@ -1,10 +1,9 @@
 *mini.jump* Jump to next/previous single character
-*MiniJump*
 
 MIT License Copyright (c) 2021 Evgeni Chasnovski, Adam Blažek
 
-==============================================================================
-
+------------------------------------------------------------------------------
+                                                                      *MiniJump*
 Features:
 - Extend f, F, t, T to work on multiple lines.
 
@@ -40,9 +39,9 @@ To stop module from showing non-error feedback, set `config.silent = true`.
 
 # Highlight groups ~
 
-* `MiniJump` - all possible cursor positions.
+- `MiniJump` - all possible cursor positions.
 
-To change any highlight group, modify it directly with |:highlight|.
+To change any highlight group, set it directly with |nvim_set_hl()|.
 
 # Disabling ~
 
@@ -54,8 +53,6 @@ disabling module's functionality is left to user. See
 
 ------------------------------------------------------------------------------
                                                                *MiniJump-events*
-Events ~
-
 To allow user customization and integration of external tools, certain |User|
 autocommand events are triggered under common circumstances:
 
@@ -82,9 +79,7 @@ Usage ~
 ------------------------------------------------------------------------------
                                                                *MiniJump.config*
                                `MiniJump.config`
-Module config
-
-Default values:
+Defaults ~
 >lua
   MiniJump.config = {
     -- Module mappings. Use `''` (empty string) to disable one.
@@ -146,7 +141,7 @@ Fields ~
 {n_times} `(number|nil)` Number of times to perform consecutive jumps.
 {mode} `(string)` Mode of latest jump (output of |mode()| with non-zero argument).
 {jumping} `(boolean)` Whether module is currently in "jumping mode": usage of
-  |MiniJump.smart_jump| and all mappings won't require target.
+  |MiniJump.smart_jump()| and all mappings won't require target.
 
 Initial values:
 >lua

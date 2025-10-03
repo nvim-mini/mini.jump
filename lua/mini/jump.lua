@@ -1,10 +1,7 @@
 --- *mini.jump* Jump to next/previous single character
---- *MiniJump*
 ---
 --- MIT License Copyright (c) 2021 Evgeni Chasnovski, Adam Blažek
----
---- ==============================================================================
----
+
 --- Features:
 --- - Extend f, F, t, T to work on multiple lines.
 ---
@@ -40,9 +37,9 @@
 ---
 --- # Highlight groups ~
 ---
---- * `MiniJump` - all possible cursor positions.
+--- - `MiniJump` - all possible cursor positions.
 ---
---- To change any highlight group, modify it directly with |:highlight|.
+--- To change any highlight group, set it directly with |nvim_set_hl()|.
 ---
 --- # Disabling ~
 ---
@@ -51,9 +48,8 @@
 --- different scenarios and customization intentions, writing exact rules for
 --- disabling module's functionality is left to user. See
 --- |mini.nvim-disabling-recipes| for common recipes.
+---@tag MiniJump
 
---- Events ~
----
 --- To allow user customization and integration of external tools, certain |User|
 --- autocommand events are triggered under common circumstances:
 ---
@@ -102,9 +98,7 @@ MiniJump.setup = function(config)
   H.create_default_hl()
 end
 
---- Module config
----
---- Default values:
+--- Defaults ~
 ---@eval return MiniDoc.afterlines_to_code(MiniDoc.current.eval_section)
 MiniJump.config = {
   -- Module mappings. Use `''` (empty string) to disable one.
@@ -159,7 +153,7 @@ MiniJump.config = {
 ---@field n_times __jump_n_times
 ---@field mode string Mode of latest jump (output of |mode()| with non-zero argument).
 ---@field jumping boolean Whether module is currently in "jumping mode": usage of
----   |MiniJump.smart_jump| and all mappings won't require target.
+---   |MiniJump.smart_jump()| and all mappings won't require target.
 ---@text
 --- Initial values:
 ---@eval return MiniDoc.afterlines_to_code(MiniDoc.current.eval_section)
