@@ -369,7 +369,8 @@ H.create_autocommands = function()
   end
 
   au('CursorMoved', '*', H.on_cursormoved, 'On CursorMoved')
-  au({ 'BufLeave', 'InsertEnter' }, '*', MiniJump.stop_jumping, 'Stop jumping')
+  -- Check current buffer not immediately to allow "temporary buffer switch"
+  au({ 'BufLeave', 'InsertEnter' }, '*', vim.schedule_wrap(H.stop_if_curbuf), 'Stop jumping')
   au('ColorScheme', '*', H.create_default_hl, 'Ensure colors')
 end
 
@@ -415,6 +416,10 @@ H.on_cursormoved = function()
     -- Stop jumping only if `CursorMoved` was not a result of smart jump
     if H.cache.n_cursor_moved > 1 then MiniJump.stop_jumping() end
   end
+end
+
+H.stop_if_curbuf = function(ev)
+  if ev.buf == vim.api.nvim_get_current_buf() then MiniJump.stop_jumping() end
 end
 
 -- Pattern matching -----------------------------------------------------------
