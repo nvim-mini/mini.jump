@@ -462,8 +462,7 @@ end
 
 -- Highlighting ---------------------------------------------------------------
 H.highlight = function(pattern)
-  -- Don't do anything if already highlighting input pattern
-  if H.is_highlighting(pattern) then return end
+  if H.is_highlighting(pattern) or not MiniJump.state.jumping then return end
 
   -- Stop highlighting possible previous pattern. Needed to adjust highlighting
   -- when inside jumping but a different kind one. Example: first jump with
