@@ -205,7 +205,7 @@ MiniJump.jump = function(target, backward, till, n_times)
   H.timers.idle_stop:stop()
   H.timers.idle_stop:start(config.delay.idle_stop, 0, vim.schedule_wrap(function() MiniJump.stop_jumping() end))
 
-  -- Force charwise-visual in Operator-pending expression mapping
+  -- Force charwise selection in Operator-pending expression mapping
   if is_expr then vim.cmd('normal! v') end
 
   -- Make jump(s)
@@ -233,10 +233,15 @@ MiniJump.jump = function(target, backward, till, n_times)
   local search_pattern = '\\V' .. vim.fn.escape(MiniJump.state.target, '\\')
   MiniJump.state.jumping = has_jumped or vim.fn.search(search_pattern, 'wn') ~= 0
 
-  -- If target not found in Operator-pending expression mapping, charwise-visual
-  -- is reverted, preventing a character from being consumed.
-  -- Do it here to also act on dot-repeat.
-  if is_expr and not has_jumped then vim.cmd('normal! v') end
+  -- Nothing else to do if there was a jump
+  if has_jumped then return end
+
+  -- Ensure to stop jumping on next non-jump movement
+  if MiniJump.state.jumping then H.cache.n_cursor_moved = H.cache.n_cursor_moved + 1 end
+
+  -- When in Operator-pending mapping, disable charwise selection to prevent
+  -- a character from being consumed (due to selection of a cursor cell)
+  if is_expr then vim.cmd('normal! v') end
 end
 
 --- Make smart jump
